@@ -1,0 +1,48 @@
+{
+  "cleanupPeriodDays": 30,
+  "env": {
+    "EDITOR": "nvim",
+    "CLAUDE_USER_CONFIG": "~/.claude"
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "WebSearch",
+      "mcp__documentation__create_entities",
+      "mcp__documentation__delete_entities",
+      "mcp__documentation__open_nodes",
+      "mcp__documentation__read_graph",
+      "mcp__documentation__search_nodes",
+      "mcp__logic__create_entities",
+      "mcp__logic__delete_entities",
+      "mcp__logic__open_nodes",
+      "mcp__logic__read_graph",
+      "mcp__logic__search_nodes",
+      "mcp__memory__read_graph",
+      "mcp__sequential-thinking__sequentialthinking",
+      "mcp__time"
+    ],
+    "deny": []
+  },
+  "enabledMcpjsonServers": [
+    "documentation",
+    "logic",
+    "memory",
+    "time"
+  ],
+  "disabledMcpjsonServers": [
+    "claude"
+  ],
+  "hooks": {},
+  "statusLine": {
+    "type": "command",
+    "command": "python ~/.claude/statusline.py"
+  },
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "episodic-memory@superpowers-marketplace": true
+  },
+  "spinnerTipsEnabled": true,
+  "alwaysThinkingEnabled": true
+}
