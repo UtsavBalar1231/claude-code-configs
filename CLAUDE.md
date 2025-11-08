@@ -14,6 +14,21 @@ This file provides persistent instructions to Claude Code across all sessions an
 - **Be explicit**: Prefer explicit implementations over implicit behavior
 - **No emojis in code**: Use Nerd Font icons or unicode characters instead of emojis in codebases
 
+## Communication Expectations
+
+### Expert-Level Interaction
+- Treat you as an experienced developer who understands tradeoffs
+- Lead with solutions, provide reasoning when contextually useful
+- Challenge approaches that seem incorrect - ask questions rather than assuming
+- Suggest alternatives when there's a better path
+
+### Response Style
+- Concise but complete - no unnecessary verbosity
+- Direct answers before detailed explanations
+- When corrected: acknowledge the specific error, demonstrate understanding, apply the fix
+- **Never use validation phrases** like "You're absolutely right!", "Great catch!", "Perfect!"
+- Embrace unconventional solutions when they solve the problem better
+
 ## Code Style & Conventions
 
 ### General Principles
@@ -27,6 +42,25 @@ This file provides persistent instructions to Claude Code across all sessions an
 - Maintain up-to-date README files
 - Document API contracts and interfaces
 - Include examples in documentation
+
+## Code Comments Policy
+
+**Default: Write self-documenting code. Comments should be rare.**
+
+Only add comments when:
+- Explaining non-obvious "why" behind business logic
+- Documenting gotchas, caveats, or order-dependencies
+- Describing complex algorithms where the logic isn't immediately clear
+- Project specifications explicitly require documentation
+- Marking TODOs or FIXMEs for incomplete work
+
+**Never comment:**
+- What the code does (use better variable/function names instead)
+- Obvious operations (`// Create user`, `// Loop through items`)
+- Translations of code to English
+- Anything that would be redundant to someone reading the code
+
+When comments ARE needed, write them naturally - how a human developer would actually write them, not formal AI-speak.
 
 ## Tool Usage Preferences
 
@@ -47,13 +81,6 @@ This file provides persistent instructions to Claude Code across all sessions an
 - Run tests before committing changes
 - Document test cases and edge conditions
 
-## MCP Tools Available
-- **memory**: Persistent memory across sessions (use # shortcut for quick adds)
-- **documentation**: Documentation graph storage and retrieval
-- **logic**: Logical reasoning and inference
-- **time**: Temporal awareness and scheduling
-- **sequential-thinking**: Step-by-step problem solving with chain of thought
-
 ### MCP Integration in Agents
 
 Your specialized agents leverage MCP tools for enhanced capabilities:
@@ -61,14 +88,13 @@ Your specialized agents leverage MCP tools for enhanced capabilities:
 **debugger agent**:
 - Uses **sequential-thinking** for complex root cause analysis requiring multi-step reasoning
 - Uses **memory** to track debugging patterns and lessons learned across sessions
-- Uses **documentation** to search for API references and known issues
+- File analysis tools (Read, Grep, Glob, Bash) for code investigation
 
 **code-reviewer agent**:
-- Uses **documentation** to search for API references, best practices, and security guidelines
 - Uses **memory** to track recurring code quality patterns and team preferences
-- Uses **logic** to perform logical analysis of complex code paths
+- File analysis tools (Read, Grep, Glob, Bash) for comprehensive code review
 
-This integration provides agents with persistent memory, structured reasoning, and access to external knowledge bases.
+This integration provides agents with persistent memory, structured reasoning, and systematic code analysis.
 
 ## Skills Available
 - **ai-slop-detector**: Detect and remediate AI-generated code quality issues

@@ -290,3 +290,133 @@ mcp-status:
     echo "Checking MCP Server Health..."
     echo ""
     claude mcp list
+
+# Show differences between ~/.claude and repository
+diff:
+    #!/usr/bin/env bash
+    set -e
+
+    SOURCE="$HOME/.claude"
+    TARGET="$(pwd)"
+
+    if [ ! -e "$SOURCE" ]; then
+        echo "[ERROR] Configuration not found at $SOURCE"
+        echo "Run 'just install' first to install the configuration"
+        exit 1
+    fi
+
+    echo "Comparing ~/.claude with repository..."
+    echo "======================================="
+    echo ""
+    echo "Source: $SOURCE"
+    echo "Target: $TARGET"
+    echo ""
+
+    # Use rsync in dry-run mode to show what would be synced
+    rsync -avn --delete \
+        --exclude='*.pyc' \
+        --exclude='.DS_Store' \
+        --exclude='.claude/settings.local.json' \
+        --exclude='.credentials.json' \
+        --exclude='.git' \
+        --exclude='.update_check' \
+        --exclude='Justfile' \
+        --exclude='README.md' \
+        --exclude='__pycache__' \
+        --exclude='backups/*' \
+        --exclude='debug/*' \
+        --exclude='file-history/*' \
+        --exclude='history.jsonl' \
+        --exclude='local/*' \
+        --exclude='plugins/cache/*' \
+        --exclude='projects/*' \
+        --exclude='session-env/*' \
+        --exclude='shell-snapshots/*' \
+        --exclude='statsig/*' \
+        --exclude='todos/*' \
+        "$SOURCE/" "$TARGET/" | grep -v '/$' || echo "No differences found"
+
+    echo ""
+    echo "Run 'just pull' to sync these changes to the repository"
+
+# Pull configuration changes from ~/.claude to repository
+pull:
+    #!/usr/bin/env bash
+    set -e
+
+    SOURCE="$HOME/.claude"
+    TARGET="$(pwd)"
+
+    if [ ! -e "$SOURCE" ]; then
+        echo "[ERROR] Configuration not found at $SOURCE"
+        echo "Run 'just install' first to install the configuration"
+        exit 1
+    fi
+
+    echo "Pulling configuration from ~/.claude to repository..."
+    echo "====================================================="
+    echo ""
+
+    # Show what will be synced
+    echo "Checking for changes..."
+    CHANGES=$(rsync -avn --delete \
+        --exclude='*.pyc' \
+        --exclude='.DS_Store' \
+        --exclude='.claude/settings.local.json' \
+        --exclude='.credentials.json' \
+        --exclude='.git' \
+        --exclude='.update_check' \
+        --exclude='Justfile' \
+        --exclude='README.md' \
+        --exclude='__pycache__' \
+        --exclude='backups/*' \
+        --exclude='debug/*' \
+        --exclude='file-history/*' \
+        --exclude='history.jsonl' \
+        --exclude='local/*' \
+        --exclude='plugins/cache/*' \
+        --exclude='projects/*' \
+        --exclude='session-env/*' \
+        --exclude='shell-snapshots/*' \
+        --exclude='statsig/*' \
+        --exclude='todos/*' \
+        "$SOURCE/" "$TARGET/" | grep -v '/$' || true)
+
+    if [ -z "$CHANGES" ]; then
+        echo "No changes to sync"
+        exit 0
+    fi
+
+    echo "The following files will be synced:"
+    echo "$CHANGES"
+    echo ""
+
+    # Perform the sync
+    rsync -av --delete \
+        --exclude='*.pyc' \
+        --exclude='.DS_Store' \
+        --exclude='.claude/settings.local.json' \
+        --exclude='.credentials.json' \
+        --exclude='.git' \
+        --exclude='.update_check' \
+        --exclude='Justfile' \
+        --exclude='README.md' \
+        --exclude='__pycache__' \
+        --exclude='backups/*' \
+        --exclude='debug/*' \
+        --exclude='file-history/*' \
+        --exclude='history.jsonl' \
+        --exclude='local/*' \
+        --exclude='plugins/cache/*' \
+        --exclude='projects/*' \
+        --exclude='session-env/*' \
+        --exclude='shell-snapshots/*' \
+        --exclude='statsig/*' \
+        --exclude='todos/*' \
+        "$SOURCE/" "$TARGET/"
+
+    echo ""
+    echo "[SUCCESS] Configuration pulled from ~/.claude to repository"
+    echo ""
+    echo "Changes are now in your working directory."
+    echo "Review with 'git status' and commit if desired."

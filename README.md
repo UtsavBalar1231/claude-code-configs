@@ -211,6 +211,10 @@ just update          # Pull latest changes and reinstall
 just plugins         # Show plugin installation commands
 just status          # Check installation status and verify files
 
+# Sync Changes
+just diff            # Show differences between ~/.claude and repository
+just pull            # Pull changes from ~/.claude back to repository
+
 # MCP Servers
 just mcp-install     # Install all external MCP servers
 just mcp-status      # Check MCP server health (runs 'claude mcp list')
@@ -218,6 +222,35 @@ just mcp-check       # Verify MCP prerequisites (npx, uvx) are installed
 ```
 
 Run `just` without arguments to see all available commands.
+
+### Workflow: Syncing Configuration Changes
+
+When you make changes directly in `~/.claude` and want to commit them to the repository:
+
+```bash
+# 1. Preview what changed
+just diff
+
+# 2. Pull changes back to repository
+just pull
+
+# 3. Review and commit
+git status
+git add .
+git commit -m "Update configuration"
+git push
+```
+
+**What gets synced:**
+- All configuration files (CLAUDE.md, settings.json, etc.)
+- Skills, agents, plugins, hooks directories
+- Custom statusline and scripts
+
+**What's excluded:**
+- `.git/` directory (git metadata)
+- `settings.local.json` (machine-specific settings)
+- `Justfile` and `README.md` (repository-only files)
+- Cache/temp files (.pyc, __pycache__, .DS_Store)
 
 ## Next Steps
 

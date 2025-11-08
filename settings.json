@@ -1,40 +1,74 @@
 {
   "cleanupPeriodDays": 30,
+  "model": "opusplan",
+  "outputStyle": "Explanatory",
   "env": {
     "EDITOR": "nvim",
-    "CLAUDE_USER_CONFIG": "~/.claude"
+    "CLAUDE_USER_CONFIG": "~/.claude",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
+    "MAX_THINKING_TOKENS": "32768"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
-      "WebFetch",
       "WebSearch",
-      "mcp__documentation__create_entities",
-      "mcp__documentation__delete_entities",
-      "mcp__documentation__open_nodes",
-      "mcp__documentation__read_graph",
-      "mcp__documentation__search_nodes",
-      "mcp__logic__create_entities",
-      "mcp__logic__delete_entities",
-      "mcp__logic__open_nodes",
-      "mcp__logic__read_graph",
-      "mcp__logic__search_nodes",
-      "mcp__memory__read_graph",
-      "mcp__sequential-thinking__sequentialthinking",
-      "mcp__time"
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run build:*)",
+      "Read(~/.config/**)",
+      "Read(/src/**)",
+      "Read(/docs/**)",
+      "Read(/tests/**)",
+      "Read(//home/utsav/.claude/**)",
+      "Edit(/src/**)",
+      "Edit(/tests/**)",
+      "Edit(/docs/**)",
+      "mcp__memory",
+      "mcp__time",
+      "mcp__sequential-thinking__sequentialthinking"
     ],
-    "deny": []
+    "ask": [
+      "WebFetch",
+      "Bash(rm:*)",
+      "Bash(git push:*)",
+      "Bash(git reset:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(./secrets/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Edit(//etc/**)",
+      "Edit(~/.bashrc)",
+      "Edit(~/.zshrc)"
+    ]
   },
   "enabledMcpjsonServers": [
-    "documentation",
-    "logic",
     "memory",
     "time"
   ],
   "disabledMcpjsonServers": [
     "claude"
   ],
-  "hooks": {},
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/session-start.sh"
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "python ~/.claude/statusline.py"

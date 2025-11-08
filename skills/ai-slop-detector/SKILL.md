@@ -68,11 +68,81 @@ description: Use when reviewing code for AI-generated quality issues, detecting 
 
 **Naming/Language**: Generic names (data, result, temp, handler, manager, processor), repetitive variations (data1, data2), conversational artifacts ("Here is...", "As a large language model..."), inconsistent casing
 
-**Documentation**: Excessive obvious comments, em-dash overuse, hollow claims ("highly efficient", "best practice"), generic placeholders ("TODO: Add error handling"), repetitive common words
+**Documentation - AI Slop Comment Patterns (⚠️ PRIORITY):**
+
+1. **Hollow Performance Claims** (HIGH SEVERITY)
+   - "optimized", "efficient", "performant", "fast", "lightweight" WITHOUT specific metrics
+   - "cinematic", "smooth", "elegant", "organic", "film-like", "silky" (aesthetic buzzwords)
+   - Unverified percentage claims ("75% faster", "50% reduction") without benchmarks
+   - Examples:
+     ```typescript
+     // Optimized for performance  ❌
+     // Film-standard 24fps for cinematic feel  ❌
+     // Reduced CPU workload by 75%  ❌ (no benchmark)
+     const limit = 100; // Performance-optimized value  ✅ (if accompanied by actual profile data)
+     ```
+
+2. **Obvious Function Translation Comments** (MEDIUM SEVERITY)
+   - Comments that just translate function/variable names to English
+   - "Create X", "Handle X", "Process X", "Initialize X", "Setup X", "Enable X" when function name already says this
+   - Examples:
+     ```typescript
+     // Create texture  ❌ (function: createTexture)
+     createTexture() { ... }
+
+     // Enable extensions  ❌ (function: enableExtensions)
+     enableExtensions() { ... }
+
+     // Creates render target for multi-pass effects  ✅ (explains WHY, not WHAT)
+     createTexture() { ... }
+     ```
+
+3. **Marketing Buzzwords in Technical Docs** (MEDIUM SEVERITY)
+   - "seamlessly", "robust", "powerful", "flexible", "scalable", "maintainable"
+   - "ensures", "provides", "allows", "enables" without explaining HOW
+   - "best practice", "industry standard", "production-ready", "enterprise-grade"
+   - "up to date with latest technologies" (vague filler)
+   - Examples:
+     ```markdown
+     Seamlessly integrates with AI modules  ❌
+     Provides a responsive interface  ❌
+     Ensures code quality and reliability  ❌
+
+     Integrates with AI modules via MCP protocol over stdio  ✅
+     Renders at 60fps on 1080p displays  ✅
+     Validates inputs using Zod schemas with TypeScript  ✅
+     ```
+
+4. **Excessive Obvious Comments** (LOW-MEDIUM SEVERITY)
+   - Em-dash overuse (—)
+   - "This function/method/component does X" (obvious from signature)
+   - Generic placeholders: "TODO: Add error handling", "TODO: Implement validation"
+   - Repetitive section markers when structure is obvious
+   - Examples:
+     ```typescript
+     // This function handles user input  ❌
+     function handleUserInput() { ... }
+
+     // Validates email format before sending  ✅ (non-obvious business logic)
+     function handleUserInput() { ... }
+     ```
+
+5. **Conversational Artifacts** (HIGH SEVERITY - DEAD GIVEAWAY)
+   - "Here is...", "Now we...", "Let's...", "Note that...", "Please note..."
+   - "As mentioned above", "As we can see"
+   - "In this function", "The following code"
 
 **Code Structure**: Unnecessarily complex solutions, copy-paste with variations, inconsistent style within functions, mismatched boilerplate, over-engineered abstractions
 
 **Dependencies**: Imports for plausible but non-existent packages, unusual names not in registries, invalid version numbers, typosquatting patterns, mixed package managers
+
+---
+
+**🔴 DETECTION STRATEGY**:
+1. **First pass**: Grep for buzzwords: `(optimized|efficient|seamless|robust|ensures|provides|cinematic|organic|film-like|elegant|smooth)`
+2. **Second pass**: Look for "Create/Handle/Process/Enable" comments above functions with those exact names
+3. **Third pass**: Check for unverified percentage claims in comments
+4. **Fourth pass**: Scan marketing docs/resumes for buzzword density
 
 ---
 
@@ -293,6 +363,118 @@ async function doubleProductPrices(products: Product[]): Promise<Product[]> {
   });
 }
 ```
+
+---
+
+### Example 4: Obvious Function Translation Comments
+
+**AI SLOP** ❌:
+```typescript
+// Enable required extensions
+this.enableExtensions();
+
+// Create texture for rendering
+const texture = this.createTexture();
+
+// Initialize particle system
+this.initializeParticles();
+
+protected enableExtensions(): void {
+  // Enable instancing extension for particle rendering
+  const ext = this.gl.getExtension("ANGLE_instanced_arrays");
+}
+```
+
+**CORRECTED** ✅:
+```typescript
+// ANGLE_instanced_arrays required for particle batch rendering
+this.enableExtensions();
+
+// 512x512 RGBA texture for particle atlas
+const texture = this.createTexture();
+
+// Pre-allocate 1000 particles in Float32Array
+this.initializeParticles();
+
+protected enableExtensions(): void {
+  const ext = this.gl.getExtension("ANGLE_instanced_arrays");
+  if (!ext) {
+    throw new Error("Hardware does not support instanced rendering");
+  }
+}
+```
+
+**Why it matters**: Comments should explain WHY (rationale, gotchas, non-obvious decisions), not WHAT (function already says that).
+
+---
+
+### Example 5: Hollow Performance & Aesthetic Claims
+
+**AI SLOP** ❌:
+```typescript
+export class FireEffect {
+  // Optimized for performance while maintaining pixelated aesthetic
+  private fireWidth: number = 80;
+  // Reduced CPU workload by 75%
+  private fireHeight: number = 50;
+  // Film-standard 24fps for cinematic fire flickering
+  targetFPS: 24;
+  // Slightly smoother 30fps for organic petal motion
+  petalFPS: 30;
+}
+```
+
+**CORRECTED** ✅:
+```typescript
+export class FireEffect {
+  // 80x50 grid benchmarked at 16ms/frame on i5-8250U
+  private fireWidth: number = 80;
+  private fireHeight: number = 50;
+  // 24fps: matches game target framerate, saves 33% GPU cycles vs 30fps
+  targetFPS: 24;
+  // 30fps: petal physics update rate (60fps caused motion blur artifacts)
+  petalFPS: 30;
+}
+```
+
+**Prevention**:
+- Replace "optimized/efficient" with actual metrics (ms/frame, memory usage)
+- Replace "cinematic/organic/smooth" with technical rationale (target platform, physics stability, artifact prevention)
+- Unverified percentages are marketing speak unless backed by before/after benchmarks
+
+---
+
+### Example 6: Marketing Buzzwords in Documentation
+
+**AI SLOP** ❌:
+```markdown
+## Features
+- Seamlessly integrates with AI modules
+- Provides a responsive, efficient interface
+- Ensures code quality and reliability
+- Optimized performance and power management
+- Staying up to date with the latest technologies
+- Robust error detection through checksum validation
+```
+
+**CORRECTED** ✅:
+```markdown
+## Features
+- AI module integration via MCP protocol (stdio transport)
+- 60fps UI rendering on 1920x1080 displays
+- TypeScript strict mode + Zod runtime validation
+- CPU governor tuning: 800MHz idle, 2.4GHz active (measured 40% battery improvement)
+- Uses kernel 6.6 LTS + systemd 255
+- CRC16 checksum validation on UART packets
+```
+
+**Prevention**: Every claim needs a "how" or "what":
+- "Seamlessly" → protocol/transport mechanism
+- "Efficient" → actual metrics (fps, memory, battery)
+- "Ensures quality" → tools/techniques used
+- "Optimized" → specific changes + measured improvement
+- "Latest tech" → specific versions/features
+- "Robust" → error detection mechanism + coverage
 
 ---
 

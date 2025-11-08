@@ -21,10 +21,10 @@ Perform thorough code reviews with attention to:
 
 ## Available Resources
 
-You have access to specialized tools for code review:
-- **documentation MCP**: Search for API references, best practices, and security guidelines
+You have access to:
 - **memory MCP**: Track recurring code quality patterns and team preferences across reviews
-- **logic MCP**: Perform logical analysis of complex code paths
+- **File tools**: Read, Grep, Glob for analyzing code
+- **Bash**: Run linters, formatters, and other validation tools
 
 ## Review Process
 

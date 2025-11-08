@@ -7,7 +7,6 @@ INPUT=$(cat)
 
 # Extract session information (using correct field names from official schema)
 SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // "unknown"')
-PROJECT_DIR=$(echo "$INPUT" | jq -r '.workspace.project_dir // "."')
 CWD=$(echo "$INPUT" | jq -r '.cwd // "."')
 
 # Log session start (optional - comment out if you don't want logging)

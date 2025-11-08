@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-Custom statusline for Claude Code
+Custom statusline for Claude Code matching lualine gruvbox-material hard aesthetic
 Features: Model, Git (branch + diff), Directory, Session Cost, Duration, Lines Stats
-Requires: git, python3, nerd-fonts
 """
 
 import json

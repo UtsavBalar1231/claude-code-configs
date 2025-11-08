@@ -1,0 +1,73 @@
+{
+  "name": "superpowers-marketplace",
+  "owner": {
+    "name": "Jesse Vincent",
+    "email": "jesse@fsck.com"
+  },
+  "metadata": {
+    "description": "Curated Claude Code plugins: skills, workflows, and productivity tools",
+    "version": "1.0.8"
+  },
+  "plugins": [
+    {
+      "name": "superpowers",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/obra/superpowers.git"
+      },
+      "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
+      "version": "3.4.1",
+      "strict": true
+    },
+    {
+      "name": "superpowers-chrome",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/obra/superpowers-chrome.git"
+      },
+      "description": "BETA: VERY LIGHTLY TESTED - Direct Chrome DevTools Protocol access via 'browsing' skill. Skill mode (17 CLI commands) + MCP mode (single use_browser tool). Zero dependencies, auto-starts Chrome.",
+      "version": "1.5.0",
+      "strict": true
+    },
+    {
+      "name": "elements-of-style",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/obra/the-elements-of-style.git"
+      },
+      "description": "Writing guidance based on William Strunk Jr.'s The Elements of Style (1918) - foundational rules for clear, concise, grammatically correct writing",
+      "version": "1.0.0",
+      "strict": true
+    },
+    {
+      "name": "episodic-memory",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/obra/episodic-memory.git"
+      },
+      "description": "Semantic search for Claude Code conversations. Remember past discussions, decisions, and patterns across sessions. Gives you memory that persists between sessions.",
+      "version": "1.0.9",
+      "strict": true
+    },
+    {
+      "name": "superpowers-lab",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/obra/superpowers-lab.git"
+      },
+      "description": "Experimental skills for Superpowers: Control interactive CLI tools (vim, menuconfig, REPLs, git rebase -i) through tmux automation",
+      "version": "0.1.0",
+      "strict": true
+    },
+    {
+      "name": "superpowers-developing-for-claude-code",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/obra/superpowers-developing-for-claude-code.git"
+      },
+      "description": "Skills and resources for developing Claude Code plugins, skills, MCP servers, and extensions. Includes comprehensive official documentation and self-update mechanism.",
+      "version": "0.2.0",
+      "strict": true
+    }
+  ]
+}

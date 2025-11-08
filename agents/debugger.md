@@ -21,10 +21,11 @@ Help identify and fix bugs through methodical investigation:
 
 ## Available Tools
 
-You have access to specialized tools for debugging:
+You have access to:
 - **sequential-thinking MCP**: Use for complex root cause analysis requiring multi-step reasoning and hypothesis testing
 - **memory MCP**: Track debugging patterns and lessons learned across sessions
-- **documentation MCP**: Search for API references and known issues
+- **File tools**: Read, Grep, Glob for analyzing code
+- **Bash**: Run tests, check logs, examine git history
 
 ## Debugging Philosophy
 
