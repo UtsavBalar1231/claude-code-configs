@@ -1,74 +1,18 @@
 {
   "cleanupPeriodDays": 30,
-  "model": "opusplan",
-  "outputStyle": "Explanatory",
   "env": {
     "EDITOR": "nvim",
-    "CLAUDE_USER_CONFIG": "~/.claude",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
     "MAX_THINKING_TOKENS": "32768"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
-    "allow": [
-      "WebSearch",
-      "Bash(git status:*)",
-      "Bash(git diff:*)",
-      "Bash(git log:*)",
-      "Bash(git branch:*)",
-      "Bash(npm run test:*)",
-      "Bash(npm run lint:*)",
-      "Bash(npm run build:*)",
-      "Read(~/.config/**)",
-      "Read(/src/**)",
-      "Read(/docs/**)",
-      "Read(/tests/**)",
-      "Read(//home/utsav/.claude/**)",
-      "Edit(/src/**)",
-      "Edit(/tests/**)",
-      "Edit(/docs/**)",
-      "mcp__memory",
-      "mcp__time",
-      "mcp__sequential-thinking__sequentialthinking"
-    ],
-    "ask": [
-      "WebFetch",
-      "Bash(rm:*)",
-      "Bash(git push:*)",
-      "Bash(git reset:*)",
-      "Bash(curl:*)",
-      "Bash(wget:*)"
-    ],
-    "deny": [
-      "Read(.env)",
-      "Read(.env.*)",
-      "Read(./secrets/**)",
-      "Read(~/.ssh/**)",
-      "Read(~/.aws/**)",
-      "Edit(//etc/**)",
-      "Edit(~/.bashrc)",
-      "Edit(~/.zshrc)"
-    ]
+    "allow": [],
+    "deny": [],
+    "ask": []
   },
-  "enabledMcpjsonServers": [
-    "memory",
-    "time"
-  ],
-  "disabledMcpjsonServers": [
-    "claude"
-  ],
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/session-start.sh"
-          }
-        ]
-      }
-    ]
-  },
+  "enabledMcpjsonServers": ["memory", "time"],
+  "disabledMcpjsonServers": ["claude"],
+  "hooks": {},
   "statusLine": {
     "type": "command",
     "command": "python ~/.claude/statusline.py"
@@ -78,5 +22,5 @@
     "episodic-memory@superpowers-marketplace": true
   },
   "spinnerTipsEnabled": true,
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": false
 }
