@@ -2,6 +2,11 @@
 
 This file provides persistent instructions to Claude Code across all sessions and projects.
 
+## Session Behavior
+
+### Start Every Session
+- **Display current time**: Always show the current time (UTC and local timezone) at the start of every session using the time MCP tool
+
 ## Development Philosophy
 
 ### Error Handling & Code Quality
@@ -12,7 +17,7 @@ This file provides persistent instructions to Claude Code across all sessions an
 ### Communication Style
 - **Ask when unclear**: Always ask questions when context is vague or ambiguous
 - **Be explicit**: Prefer explicit implementations over implicit behavior
-- **No emojis in code**: Use Nerd Font icons or unicode characters instead of emojis in codebases
+- **No emojis in code**
 
 ## Communication Expectations
 

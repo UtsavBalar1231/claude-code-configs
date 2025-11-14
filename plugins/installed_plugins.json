@@ -2,17 +2,17 @@
   "version": 1,
   "plugins": {
     "superpowers@superpowers-marketplace": {
-      "version": "3.2.3",
-      "installedAt": "2025-10-29T08:41:13.911Z",
-      "lastUpdated": "2025-10-29T08:41:13.911Z",
+      "version": "3.4.1",
+      "installedAt": "2025-11-11T09:21:46.147Z",
+      "lastUpdated": "2025-11-11T09:21:46.147Z",
       "installPath": "/home/utsav/.claude/plugins/cache/superpowers",
-      "gitCommitSha": "31fd7642854d6d3dfd65959fcefabe71ccee86d9",
+      "gitCommitSha": "02c87670de64b236ffd3239305dd71190983679d",
       "isLocal": false
     },
     "episodic-memory@superpowers-marketplace": {
       "version": "1.0.9",
-      "installedAt": "2025-11-08T14:40:48.190Z",
-      "lastUpdated": "2025-11-08T14:40:48.190Z",
+      "installedAt": "2025-11-11T09:21:54.675Z",
+      "lastUpdated": "2025-11-11T09:21:54.675Z",
       "installPath": "/home/utsav/.claude/plugins/cache/episodic-memory",
       "gitCommitSha": "0ede59bb569b370250e1990ae13866722127f754",
       "isLocal": false
